@@ -1,48 +1,47 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
-import { link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
     <header className='fixed-nav-bar w-nav'>
       <nav className='max-w-screen2x1 mx-auto px-4 flex justify-between items-center'>
-        <ul className='nav__links'>
-          <li className='link'>
-            <link to="/">Home</link>
+        <ul className='nav__Links'>
+          <li className='Link'>
+            <Link to='/'>Home</Link>
           </li>
-          <li className="link">
-            <link to="/shop">Shop</link>
+          <li className='Link'>
+            <Link to='/shop'>Shop</Link>
           </li>
-          <li className="link">
-            <link to="/pages">Pages</link>
+          <li className='Link'>
+            <Link to='/pages'>Pages</Link>
           </li>
-          <li className="link">
-            <link to="/contact">Contact</link>
+          <li className='Link'>
+            <Link to='/contact'>Contact</Link>
           </li>
         </ul>
 
-        <div className="nav__logo">
-          <link to="/">
+        <div className='nav__logo'>
+          <Link to='/'>
             <span>showars</span>
-          </link>
+          </Link>
         </div>
 
-        <div className="nav__icons relative">
+        <div className='nav__icons relative'>
           <span>
-            <link>
-              <i className="ri-search-line"></i>
-            </link>
+            <Link>
+              <i className='ri-search-line'></i>
+            </Link>
           </span>
 
           <span>
-            <button className="hover:text">
-              <i className="ri-shopping-cart-line"></i>
+            <button className='hover:text'>
+              <i className='ri-shopping-cart-line'></i>
             </button>
           </span>
 
           <span>
-            <button className="hover:text">
-              <i className="ri-account-circle-line"></i>
+            <button className='hover:text'>
+              <i className='ri-account-circle-line'></i>
             </button>
           </span>
         </div>
