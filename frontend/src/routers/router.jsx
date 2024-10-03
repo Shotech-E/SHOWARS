@@ -1,17 +1,21 @@
+/* eslint-disable no-unused-vars */
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 
+import Home from "../pages/home/Home";
+
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
         path: "/",
-        element: <App />,
-        children: [
-            {
-                path: "/",
-                element: <h1>Home page</h1>
-            }
-        ]
-    }
-])
+        element: <Home />,
+      },
+    ],
+  },
+]);
 
 export default router;
