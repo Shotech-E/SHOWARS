@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-key */
 import React from 'react'
 
@@ -12,7 +13,7 @@ const Categories = () => {
     const categories = [
       { name: "Accessories", path: "accessories", image: category1 },
       { name: "Dress Collection", path: "dress", image: category2 },
-      { name: "Jewelleries", path: "jewellery", image: category3 },
+      { name: "Jewelries", path: "jewelry", image: category3 },
       { name: "Cosmetics", path: "cosmetics", image: category4 },
     ]
     return (
@@ -20,8 +21,8 @@ const Categories = () => {
         <div className="product__grid">
             {
                 categories.map((category) => (
-                    <Link to={`/categories/${category.path}`} className='categories__card'>
-                        <img src={category.image} alt="{category.name}" />
+                    <Link key={category.name} to={`/categories/${category.path}`} className='categories__card'>
+                        <img src={category.image} alt={category.name} />
                         <h4>{category.name}</h4>
                     </Link>
                 ))
