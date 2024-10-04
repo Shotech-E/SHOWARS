@@ -29,11 +29,11 @@ const DealsSection = () => {
           </div>
           <div className="deals__countdown__card">
             <h4>15</h4>
-            <p>Minutes</p>
+            <p>Mins</p>
           </div>
           <div className="deals__countdown__card">
             <h4>05</h4>
-            <p>Seconds</p>
+            <p>Secs</p>
           </div>
         </div>
       </div>
