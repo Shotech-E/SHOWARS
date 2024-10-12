@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
+
+  const products = useSelector((state) => state.cart.products);
+  console.log(products);
+
   return (
     <header className='fixed-nav-bar w-nav'>
       <nav className='max-w-screen2x1 mx-auto px-4 flex justify-between items-center'>
@@ -9,7 +14,7 @@ const Navbar = () => {
             <Link to='/'>Home</Link>
           </li>
           <li className='link'>
-            <Link to='/shop'>Shop</Link>
+            <Link to='/shop/'>Shop</Link>
           </li>
           <li className='link'>
             <Link to='/pages'>Pages</Link>
@@ -27,7 +32,7 @@ const Navbar = () => {
 
         <div className='nav__icons relative'>
           <span>
-            <Link>
+            <Link to='/search'>
               <i className='ri-search-line'></i>
             </Link>
           </span>

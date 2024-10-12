@@ -8,6 +8,7 @@ import instaImg4 from "../assets/instagram-4.jpg";
 import instaImg5 from "../assets/instagram-5.jpg";
 import instaImg6 from "../assets/instagram-6.jpg";
 
+
 const Footer = () => {
   return (
     <>
