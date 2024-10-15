@@ -10,6 +10,7 @@ const Navbar = () => {
   const products = useSelector((state) => state.cart.products);
   const [isCartOpen, setisCartOpen] = useState(false);
 
+
   const handleCartToggle = () => {
     setisCartOpen(!isCartOpen);
   }

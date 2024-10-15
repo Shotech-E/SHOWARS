@@ -7,8 +7,10 @@ import CategoryPage from "../pages/category/CategoryPage";
 import Search from "../pages/search/Search";
 import ShopPage from "../pages/shop/ShopPage";
 import SingleProduct from "../pages/shop/productDetails/SingleProduct";
+import Login from "../components/Login";
+import Register from "../components/Register";
 
-const router = createBrowserRouter([
+const Router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
@@ -32,9 +34,18 @@ const router = createBrowserRouter([
       {
         path: "/shop/:id",
         element: <SingleProduct />,
-      }
+      },
     ],
   },
+
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Register />,
+  }
 ]);
 
-export default router;
+export default Router;
