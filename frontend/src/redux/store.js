@@ -9,3 +9,5 @@ export const store = configureStore({
       cart: cartReducer
   },
 });
+
+export default store;

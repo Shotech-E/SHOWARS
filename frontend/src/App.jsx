@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import { Provider } from 'react-redux';
 
 function App() {
 
@@ -10,7 +9,6 @@ function App() {
     <>
       <Navbar />
       <Outlet />
-      <Provider/>
       <Footer/>
     </>
   );
