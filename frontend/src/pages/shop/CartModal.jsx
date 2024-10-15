@@ -1,16 +1,22 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import React from "react";
 import OrderSummary from "./OrderSummary";
 import { useDispatch } from "react-redux";
-import { updateQuantity } from "../../redux/features/cart/cartSlice";
+import { updateQuantity, removeFromCart } from "../../redux/features/cart/cartSlice";
 
 const cartModal = ({ products, isOpen, onClose }) => {
-    const dispatch = useDispatch();
-
+  const dispatch = useDispatch();
+  
     const handleQuantity = (type, id) => { 
         const payload = { type, id }
         dispatch(updateQuantity(payload));
-    }
+  }
+  
+  const handleRemove = (e, id) => {
+    e.preventDefault();
+    dispatch(removeFromCart({ id }));
+  }
   return (
     <div
       className={`fixed z-[1000] inset-0 bg-black bg-opacity-50 transition-opacity ${
@@ -70,8 +76,8 @@ const cartModal = ({ products, isOpen, onClose }) => {
                         +
                       </button>
                       <div className="ml-5">
-                        <button className="">
-                          <i className="text-red-500 hover:text-red-800 mr-4 ri-delete-bin-2-line "></i>
+                        <button onClick={(e) => handleRemove(e, item.id)} className="text-red-500 hover:text-red-800 mr-4 ">
+                          <i className="ri-delete-bin-2-line "></i>
                         </button>
                       </div>
                     </div>
