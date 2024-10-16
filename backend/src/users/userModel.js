@@ -23,12 +23,17 @@ const userSchema = new Schema({
   },
   profileImage: {
     type: String,
-    bio: { type: String, maxlength: 200 },
-    profession: String,
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+  },
+  bio: {
+    type: String,
+    maxlength: 200
+  },
+  profession: {
+    type: String
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

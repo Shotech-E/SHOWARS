@@ -26,11 +26,6 @@ const authRoutes = require('./src/users/userRoute');
 app.use('/api/auth', authRoutes);
 
 main().then(()=>console.log('Database connected')).catch((err) => err => console.log(err))
-
-// shotechE
-// QieZBP6LbfI9w4ZC
-
-
 async function main() {
   await mongoose.connect(process.env.DB_URL);
     
@@ -38,8 +33,6 @@ app.get("/", (req, res) => {
   res.send("Welcome to Showars Shopping Mall!");
 });
 }
-
-
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

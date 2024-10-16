@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("./userModel");
 const generateAuthToken = require("../middleware/generateAuthToken");
-const verifyToken = require("../middleware/verifyToken");
+// const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
 // Register Endpoint
@@ -57,9 +57,95 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// All Users Endpoint
-router.get("/users", verifyToken, async (req, res) => {
-  res.send({message: "Protected Users"});
+// // All Users Endpoint
+// router.get("/users", verifyToken, async (req, res) => {
+//   res.send({message: "Protected Users"});
+// });
+
+// Logout Endpoint
+router.post("/logout", (req, res) => { 
+  res.clearCookie("token");
+  res.status(200).send({ message: "Logged out successfully" });
+})
+
+// Delete User Endpoint
+router.delete("/user/:id", async (req, res) => {
+  try {
+    const {id} = req.params
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    res.status(200).send({ message: "User deleted successfully" });
+  } catch (error) {
+    console.log("Error in deleting user", error);
+    res.status(500).send({ message: "Error in deleting user" });
+  }
+});
+
+// Get All User Endpoint
+router.get("/users", async (req, res) => {
+  try {
+    const users = await User.find({}, "id email role").sort({ createdAt: -1 });
+    res.status(200).send(users);
+  } catch (error) {
+    console.log("Error in getting users", error);
+    res.status(500).send({ message: "Error in getting users" });
+  }
+});
+
+// Update User Profile Endpoint
+router.patch("/edit-profile", async (req, res) => {
+  try {
+      const { userId, username, email, profileImage, bio, profession } = req.body;
+      if(!userId) {
+        return res.status(404).send({ message: "User Id not found" });
+      }
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+      // Update user profile
+      if(username !== undefined) {user.username = username;}
+      if(email !== undefined) {user.email = email;}
+      if(profileImage !== undefined) {user.profileImage = profileImage;} 
+      if(bio !== undefined) {user.bio = bio;}
+      if (profession !== undefined) { user.profession = profession; }
+      
+    await user.save();
+      res.status(200).send({ message: "User updated successfully",
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          profileImage: user.profileImage,
+          bio: user.bio,
+          profession: user.profession
+        }
+       });
+  } catch (error) {
+      console.error("Error in updating user", error);
+      res.status(500).send({ message: "Error in updating user" });
+  }
+});
+
+// Update User Role Endpoint
+router.put("/user/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const { role } = req.body
+    const user = await User.findByIdAndUpdate(id, (role), {  
+      new: true
+    });
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    res.status(200).send({ message: "User updated successfully" });
+  } catch (error) {
+    console.log("Error in updating user", error);
+    res.status(500).send({ message: "Error in updating user" });
+  }
 });
 
 module.exports = router;
