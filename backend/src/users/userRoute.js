@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// // All Users Endpoint
+// All Users Endpoint
 // router.get("/users", verifyToken, async (req, res) => {
 //   res.send({message: "Protected Users"});
 // });
