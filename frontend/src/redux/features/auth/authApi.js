@@ -7,6 +7,8 @@ const authApi = createApi({
         baseUrl: `${getBaseUrl()}/api/auth`,
         credentials: "include",
     }),
+
+    tagTypes: ["User"],
     
     endpoints: (builder) => ({
         registerUser: builder.mutation({
