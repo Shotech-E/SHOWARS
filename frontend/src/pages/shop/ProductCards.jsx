@@ -4,10 +4,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import RatingStars from '../../components/RatingStars';
 import { useDispatch } from 'react-redux';
-
 import { addToCart } from '../../redux/features/cart/cartSlice';
 
-// import products from "../../data/products.json";
 
 const ProductCards = ({ products }) => {
     const dispatch = useDispatch();
@@ -21,7 +19,7 @@ const ProductCards = ({ products }) => {
       {products.map((product, index) => (
         <div key={index} className="product__card">
           <div className="relative">
-            <Link to={`/shop/${product.id}`}>
+            <Link to={`/shop/${product._id}`}>
               <img
                 src={product.image}
                 alt={product.name}

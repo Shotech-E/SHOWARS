@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import productsData from "../../data/products.json";
 import ProductCards from "../shop/ProductCards";
 import ShopFiltering from "./ShopFiltering";
+import { useFetchAllProductsQuery } from "../../redux/features/products/productsApi";
 
 const filters = {
   categories: ["all", "accessories", "dress", "jewelry", "cosmetics"],
@@ -17,49 +16,36 @@ const filters = {
 };
 
 const ShopPage = () => {
-  const [products, setProducts] = useState(productsData);
   const [filtersState, setFiltersState] = useState({
     category: "all",
     colour: "all",
     priceRange: "",
   });
 
-  // Filter Function
-  const applyFilters = () => {
-    let filteredProducts = productsData;
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8; // Just a number here
+  const { category, colour, priceRange } = filtersState;
+  const [minPrice, maxPrice] = priceRange
+    ? priceRange.split("-").map(Number)
+    : [NaN, NaN];
 
-    // Filter by category
-    if (filtersState.category && filtersState.category !== "all") {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category === filtersState.category
-      );
-    }
-
-    // Filter by Colour
-    if (filtersState.colour && filtersState.colour !== "all") {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.colour === filtersState.colour
-      );
-    }
-
-    // Filter by Price Range
-    if (filtersState.priceRange) {
-      const [minPrice, maxPrice] = filtersState.priceRange
-        .split("-")
-        .map(Number);
-      filteredProducts = filteredProducts.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
-      );
-    }
-
-    setProducts(filteredProducts);
-  };
+  const {
+    data: { products = [], totalPages, totalProducts } = {},
+    error,
+    isLoading,
+  } = useFetchAllProductsQuery({
+    category: category !== "all" ? category : "",
+    colour: colour !== "all" ? colour : "",
+    minPrice: isNaN(minPrice) ? "" : minPrice,
+    maxPrice: isNaN(maxPrice) ? "" : maxPrice,
+    page: currentPage,
+    limit: productsPerPage,
+  });
 
   useEffect(() => {
-    applyFilters();
-  }, [filtersState]);
+    setCurrentPage(1); // Reset to first page whenever filters change
+  }, [category, colour, priceRange]);
 
-  // Clear the filter
   const clearFilters = () => {
     setFiltersState({
       category: "all",
@@ -67,6 +53,22 @@ const ShopPage = () => {
       priceRange: "",
     });
   };
+
+  // Handle pagination
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber < 1 || pageNumber > totalPages) return;
+    setCurrentPage(pageNumber);
+  };
+
+  if (isLoading) return <h1 className="text-center">Loading...</h1>;
+  if (error)
+    return (
+      <h1 className="text-center">Error loading products: {error.message}</h1>
+    );
+
+  const startProduct = (currentPage - 1) * productsPerPage + 1;
+  const endProduct = startProduct + products.length - 1;
+
   return (
     <>
       <section className="section__container bg-primary-light">
@@ -75,11 +77,9 @@ const ShopPage = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas
           accusantium quod iure repellat, nemo numquam ex exercitationem, ullam
           id officiis accusamus minus facilis similique magnam architecto
-          molestiae, soluta obcaecati!
         </p>
       </section>
       <section className="section__container">
-        {/* Left Side */}
         <div className="flex flex-col md:flex-row md:gap-12 gap-8">
           <ShopFiltering
             filters={filters}
@@ -87,13 +87,39 @@ const ShopPage = () => {
             setFiltersState={setFiltersState}
             clearFilters={clearFilters}
           />
-
-          {/* Right Side */}
           <div>
             <h3 className="text-xl font-medium mb-4">
-              Products Available: {products.length}
+              Showing: {startProduct} to {endProduct} of {totalProducts}{" "}
+              products
             </h3>
             <ProductCards products={products} />
+            <div className="flex justify-center mt-8">
+              <button
+                className="btn btn-secondary px-4 py-2 mr-2 rounded-md"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  className={`btn btn-secondary px-4 py-2 mr-2 rounded-md ${
+                    currentPage === index + 1 ? "bg-primary text-white" : ""
+                  }`}
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                className="btn btn-secondary px-4 py-2 rounded-md ml-2"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </section>
