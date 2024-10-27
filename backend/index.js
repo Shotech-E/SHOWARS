@@ -24,10 +24,13 @@ app.use(cors({
 const authRoutes = require('./src/users/userRoute');
 const productRoutes = require('./src/products/productsRoute');
 const reviewRoute = require("./src/reviews/reviewsRoute");
+const ordersRoute = require("./src/orders/ordersRoute");
 
+// All Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/reviews', reviewRoute);
+app.use('/api/orders', ordersRoute);
 
 main().then(()=>console.log('Database connected')).catch((err) => err => console.log(err))
 async function main() {
