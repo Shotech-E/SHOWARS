@@ -2,12 +2,13 @@ const express = require("express");
 const User = require("../users/userModel");
 const Order = require("../orders/ordersModel");
 const Reviews = require("../reviews/reviewsModel");
+const Products = require("../products/productsModel");
 const router = express.Router();
 
 // GET USER STATS BY EMAIL
 router.get("/user-stats/:email", async (req, res) => {
     const { email } = req.params;
-    if (!email) { 
+    if (!email) {
         return res.status(400).send({ message: "Email is required" });
     }
     try {
@@ -37,6 +38,47 @@ router.get("/user-stats/:email", async (req, res) => {
         console.error("Error getting user stats by email", error);
         res.status(500).send({ message: "Failed getting user stats by email" });
     }
-})
+});
+
+// Admin Status
+router.get("/admin-stats", async (req, res) => {
+    try {
+        const totalUsers = await User.countDocuments();
+        const totalProducts = await Products.countDocuments();
+        const totalOrders = await Order.countDocuments();
+        const totalReviews = await Reviews.countDocuments();
+
+        // Calculate total earning
+        const totalEarningsResult = await Order.aggregate([
+            { $group: { _id: null, totalEarnings: { $sum: "$amount" } } },
+        ]);
+        const totalEarnings = totalEarningsResult.length > 0 ? totalEarningsResult[0].totalEarnings : 0;
+
+        const monthlyEarningsResult = await Order.aggregate([
+            {
+                $group: {
+                    _id: { month: { month: "$createdAt" }, year: { year: "$createdAt" } },
+                    monthlyEarnings: { $sum: "$amount" },
+                },
+            },
+            {
+                $sort: { "_id.year": 1, "_id.month": -1 },
+            }
+        ]);
+
+        // Formate monthly Earnings
+        const monthlyEarnings = monthlyEarningsResult.map((entry) => ({
+            month: entry._id.month,
+            year: entry._id.year,
+            earnings: entry.monthlyEarnings.toFixed(2),
+        }))
+
+        res.status(200).send({ totalUsers, totalProducts, totalOrders, totalReviews, totalEarnings, monthlyEarnings });
+
+    } catch (error) {
+        console.error("Error getting admin stats", error);
+        res.status(500).send({ message: "Failed getting admin stats" });
+    }
+});
 
 module.exports = router
