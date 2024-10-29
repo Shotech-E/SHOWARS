@@ -25,12 +25,14 @@ const authRoutes = require('./src/users/userRoute');
 const productRoutes = require('./src/products/productsRoute');
 const reviewRoute = require("./src/reviews/reviewsRoute");
 const ordersRoute = require("./src/orders/ordersRoute");
+const statsRoute = require("./src/stats/statsRoute");
 
 // All Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/reviews', reviewRoute);
 app.use('/api/orders', ordersRoute);
+app.use('/api/stats', statsRoute);
 
 main().then(()=>console.log('Database connected')).catch((err) => err => console.log(err))
 async function main() {

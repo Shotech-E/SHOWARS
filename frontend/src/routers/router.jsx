@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/home/Home";
@@ -9,6 +7,9 @@ import ShopPage from "../pages/shop/ShopPage";
 import SingleProduct from "../pages/shop/productDetails/SingleProduct";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import PaymentSuccess from "../components/PaymentSuccess";
+import TimelineStep from "../components/TimelineStep";
+
 
 const Router = createBrowserRouter([
   {
@@ -35,6 +36,14 @@ const Router = createBrowserRouter([
         path: "/shop/:id",
         element: <SingleProduct />,
       },
+      {
+        path: "/success",
+        element: <PaymentSuccess/>,
+      },
+      {
+        path: "/timeline",
+        element: <TimelineStep />,
+      }
     ],
   },
 

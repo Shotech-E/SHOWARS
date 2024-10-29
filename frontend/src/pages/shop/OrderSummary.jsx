@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-import React from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from '../../redux/features/cart/cartSlice';
-
 // import { getBaseUrl } from "../../utils/baseURL";
 import { loadStripe } from "@stripe/stripe-js";
 // import { Elements } from "@stripe/react-stripe-js";
@@ -21,17 +18,17 @@ const OrderSummary = () => {
     dispatch(clearCart());
   }
 
+  // payment integration
   const makePayment = async (e) => {
     const stripe = await loadStripe(
       "pk_test_51QE7lZLe2VbPgG0NZaZq2psyWzjs53X2DvSib6oPaAt7HmbJ0Oz5dBr171qLggl9zgG9l9v6ZLPETwxMvzk3PVc300CGtZH8Cp"
     );
-    // const stripe = await loadStripe(import.meta.env.VITE_STRIPE_KEY);
+    // const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
     // console.log(stripe);
     const body = {
       products: products,
-      user: user?._id,
+      userId: user?._id,
     }
-
 
     const headers = {
       "Content-Type": "application/json",
@@ -45,7 +42,7 @@ const OrderSummary = () => {
         body: JSON.stringify(body),
       }
     );
-    
+
     const session = await response.json();
     console.log("session: ", session);
 
@@ -78,7 +75,7 @@ const OrderSummary = () => {
             <span className='mr-2'>Clear Cart</span><i className='ri-delete-bin-line'></i>
           </button>
 
-          <button onClick={(e) => {e.stopPropagation(); makePayment(e)}} className="bg-green-500 px-3 py-1.5 text-white mt-2 rounded-md flex justify-between items-center">
+          <button onClick={(e) => { e.stopPropagation(); makePayment();  }} className="bg-green-500 px-3 py-1.5 text-white mt-2 rounded-md flex justify-between items-center">
             <span className='mr-2'>Checkout</span><i className='ri-bank-card-line'></i>
           </button>
         </div>

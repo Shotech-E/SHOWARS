@@ -25,6 +25,7 @@ export const steps = [
     },
   ];
 
+  // timeline step
   const iconBgColor = isCompleted || isCurrent ? `bg-${icon.bgColor}` : 'bg-gray-100';
     const iconTextColor = isCompleted || isCurrent ? 'text-white' : `text-${icon.textColor}`;
     const connectorColor = isCompleted ? 'bg-blue-500' : 'bg-gray-200';
