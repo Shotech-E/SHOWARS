@@ -90,7 +90,7 @@ const PaymentSuccess = () => {
             order={order}
             isCompleted={isCompleted(step.status)}
             isCurrent={isCurrent(step.status)}
-            isLastStep={index === step.length - 1}
+            isLastStep={index === steps.length - 1}
             icon={step.icon}
             description={step.description}
           />

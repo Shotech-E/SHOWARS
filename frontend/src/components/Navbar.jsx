@@ -41,7 +41,7 @@ const Navbar = () => {
     { label: "Dashboard", path: "/dashboard" },
     { label: "Profile", path: "/dashboard/profile" },
     { label: "Payments", path: "/dashboard/payments" },
-    { label: "Orders", path: "/dashboard/order" },
+    { label: "Orders", path: "/dashboard/orders" },
   ];
 
   const dropdownMenu = user?.role === "admin" ? [...showAdminDropdown] : [...showUserDropdown];

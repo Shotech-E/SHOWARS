@@ -11,6 +11,11 @@ import PaymentSuccess from "../components/PaymentSuccess";
 import TimelineStep from "../components/TimelineStep";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import PrivateRoute from "../routers/PrivateRoute";
+import UserMainDashboard from "../pages/dashboard/user/dashboard/UserMainDashboard";
+import UserOrders from "../pages/dashboard/user/UserOrders";
+import OrderDetails from "../pages/dashboard/user/OrderDetails";
+// import AdminMainDashboard from "../pages/dashboard/admin/dashboard/AdminMainDashboard";
+
 
 
 const Router = createBrowserRouter([
@@ -43,6 +48,10 @@ const Router = createBrowserRouter([
         element: <PaymentSuccess />,
       },
       {
+        path: "/order/:orderId",
+        element: <OrderDetails />
+      },
+      {
         path: "/timeline",
         element: <TimelineStep />,
       },
@@ -57,19 +66,25 @@ const Router = createBrowserRouter([
     path: "/signup",
     element: <Register />,
   },
+
+  
   // Admin Stats Dashboard
   {
     path: "/dashboard",
-    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       // user route
       {
         path: "",
-        element: <div>User Dashboard</div>,
+        element: <UserMainDashboard />,
       },
       {
         path: "orders",
-        element: <div>User Orders</div>,
+        element: <UserOrders />,
       },
       {
         path: "payments",
@@ -87,27 +102,51 @@ const Router = createBrowserRouter([
       // admin route
       {
         path: "admin",
-        element: <PrivateRoute role="admin"><div>Admin Dashboard</div></PrivateRoute>,
+        element: (
+          <PrivateRoute role="admin">
+            <div>Admin Dashboard</div>
+          </PrivateRoute>
+        ),
       },
       {
         path: "add-new-post",
-        element: <PrivateRoute role="admin"><div>Add New Post</div></PrivateRoute>,
+        element: (
+          <PrivateRoute role="admin">
+            <div>Add New Post</div>
+          </PrivateRoute>
+        ),
       },
       {
         path: "manage-products",
-        element: <PrivateRoute role="admin"><div>Manage Products</div></PrivateRoute>,
+        element: (
+          <PrivateRoute role="admin">
+            <div>Manage Products</div>
+          </PrivateRoute>
+        ),
       },
       {
         path: "update-product/:id",
-        element: <PrivateRoute role="admin"><div>Update Product</div></PrivateRoute>,
+        element: (
+          <PrivateRoute role="admin">
+            <div>Update Product</div>
+          </PrivateRoute>
+        ),
       },
       {
         path: "users",
-        element: <PrivateRoute role="admin"><div>Manage All User</div></PrivateRoute>,
+        element: (
+          <PrivateRoute role="admin">
+            <div>Manage All User</div>
+          </PrivateRoute>
+        ),
       },
       {
         path: "manage-orders",
-        element: <PrivateRoute role="admin"><div>Manage Orders</div></PrivateRoute>,
+        element: (
+          <PrivateRoute role="admin">
+            <div>Manage Orders</div>
+          </PrivateRoute>
+        ),
       },
     ],
   },

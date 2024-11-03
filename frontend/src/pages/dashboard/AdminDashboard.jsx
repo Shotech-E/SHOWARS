@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   const handleLogout = async () => {
     try {
       await logoutUser().unwrap();
-      //   alert("Logout successful");
+      //alert("Logout successful");
       dispatch(logout());
       navigate("/");
     } catch (error) {

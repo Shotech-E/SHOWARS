@@ -80,5 +80,4 @@ router.get("/admin-stats", async (req, res) => {
         res.status(500).send({ message: "Failed getting admin stats" });
     }
 });
-
 module.exports = router
