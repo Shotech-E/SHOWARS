@@ -9,10 +9,10 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title)
 const UserMainDashboard = () => {
   const { user } = useSelector((state) => state.auth);
   const { data: stats, error, isLoading } = useGetUserStatsQuery(user?.email);
-  console.log(stats);
+  // console.log("Stats data:", stats); // Confirm structure
 
   if (isLoading) return <div className="text-center">Loading...</div>;
-  if (!stats) {
+  if (error) {
     return <div className="text-center text-red-500">No data found</div>;
   }
 

@@ -12,7 +12,7 @@ const OrderDetails = () => {
     if (error) return <div className="text-center text-red-500">No data found</div>;
 
     const isCompleted = (status) => {
-      const statuses = ["pending", "processing", "shipped", "completed"];
+      const statuses = [ "pending", "processing", "shipped", "completed" ];
       return statuses.indexOf(status) < statuses.indexOf(order.status);
     };
 
@@ -49,7 +49,7 @@ const OrderDetails = () => {
         },
       },
       {
-        status: "completed",
+        step: "completed",
         label: "Completed",
         description: "Your order has been successfully completed.",
         icon: {

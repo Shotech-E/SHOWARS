@@ -79,7 +79,7 @@ const UserOrders = () => {
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                        <Link to={`/order/${order?._id}`} className="text-indigo-600 hover:text-indigo-900">View Order</Link>
+                        <Link to={`/order/${order?._id}`} className="text-indigo-600 hover:text-indigo-900"><i className="ri-eye-line"></i></Link>
                       </td>
                     </tr>
                   ))}

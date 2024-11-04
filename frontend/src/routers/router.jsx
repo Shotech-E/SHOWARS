@@ -14,6 +14,7 @@ import PrivateRoute from "../routers/PrivateRoute";
 import UserMainDashboard from "../pages/dashboard/user/dashboard/UserMainDashboard";
 import UserOrders from "../pages/dashboard/user/UserOrders";
 import OrderDetails from "../pages/dashboard/user/OrderDetails";
+import UserPayments from "../pages/dashboard/user/UserPayments"
 // import AdminMainDashboard from "../pages/dashboard/admin/dashboard/AdminMainDashboard";
 
 
@@ -88,7 +89,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "payments",
-        element: <div>User Payments</div>,
+        element: <UserPayments />,
       },
       {
         path: "profile",
