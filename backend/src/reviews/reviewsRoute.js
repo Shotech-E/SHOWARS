@@ -15,6 +15,7 @@ router.post("/post-review", async (req, res) => {
         }
 
         const existingReview = await Reviews.findOne({ productId, userId });
+
         if (existingReview) {
             // Update the existing review
             existingReview.comment = comment;
@@ -43,21 +44,20 @@ router.post("/post-review", async (req, res) => {
             } else {
                 return res.status(404).send({ message: "Product not found"});
             }
-         }
-
+        }
+        
         res.status(200).send({
             message: "Review posted successfully",
             reviews: reviews
          });
 
-
     } catch (error) {
         console.error("Error in creating review", error);
-        res.status(500).send({ message: "Error in creating review" });
+        res.status(500).send({ message: "Failed in creating review" });
     }
 });
 
-// GET TOTAL REVIEW
+// GET TOTAL REVIEWS COUNT
 router.get("/total-reviews", async (req, res) => {
     try {
         const totalReviews = await Reviews.countDocuments({});
@@ -66,7 +66,7 @@ router.get("/total-reviews", async (req, res) => {
 
     } catch (error) {
         console.error("Error in getting total reviews for product", error);
-        res.status(500).send({ message: "Error in getting total reviews for product" });
+        res.status(500).send({ message: "Failed in getting total reviews for product" });
     }
 });
 
@@ -89,28 +89,10 @@ router.get("/:userId", async (req, res) => {
 
     } catch (error) {
         console.error("Error in getting reviews for user", error);
-        res.status(500).send({ message: "Error in getting reviews for user" });
+        res.status(500).send({ message: "Failed in getting reviews for user" });
         
     }
 
 })
-
-// GET ALL REVIEWS FOR A PRODUCT
-// router.get("/reviews/:productId", async (req, res) => {
-//     try {
-//         const productId = req.params.productId;
-//         const reviews = await Reviews.find({ productId });
-
-//         if (!reviews) {
-//             return res.status(404).send({ message: "No reviews found for this product" });
-//         }
-
-//         res.send(reviews);
-
-//     } catch (error) {
-//         console.error("Error in getting reviews for product", error);
-//         res.status(500).send({ message: "Error in getting reviews for product" });
-//     }
-// });
 
 module.exports = router;

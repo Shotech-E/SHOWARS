@@ -15,6 +15,8 @@ import UserMainDashboard from "../pages/dashboard/user/dashboard/UserMainDashboa
 import UserOrders from "../pages/dashboard/user/UserOrders";
 import OrderDetails from "../pages/dashboard/user/OrderDetails";
 import UserPayments from "../pages/dashboard/user/UserPayments"
+import UserReviews from "../pages/dashboard/user/UserReviews";
+import UserProfile from "../pages/dashboard/user/UserProfile";
 // import AdminMainDashboard from "../pages/dashboard/admin/dashboard/AdminMainDashboard";
 
 
@@ -50,7 +52,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/order/:orderId",
-        element: <OrderDetails />
+        element: <OrderDetails />,
       },
       {
         path: "/timeline",
@@ -68,7 +70,6 @@ const Router = createBrowserRouter([
     element: <Register />,
   },
 
-  
   // Admin Stats Dashboard
   {
     path: "/dashboard",
@@ -93,11 +94,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <div>User Profile</div>,
+        element: <UserProfile />,
       },
       {
         path: "reviews",
-        element: <div>User Reviews</div>,
+        element: <UserReviews />,
       },
 
       // admin route

@@ -8,14 +8,14 @@ import { updateQuantity, removeFromCart } from "../../redux/features/cart/cartSl
 const cartModal = ({ products, isOpen, onClose }) => {
   const dispatch = useDispatch();
   
-    const handleQuantity = (type, _id) => { 
-        const payload = { type, _id }
+    const handleQuantity = (type, id) => { 
+        const payload = { type, id }
         dispatch(updateQuantity(payload));
   }
   
-  const handleRemove = (e, _id) => {
+  const handleRemove = (e, id) => {
     e.preventDefault();
-    dispatch(removeFromCart({ _id }));
+    dispatch(removeFromCart({ id }));
   }
   return (
     <div

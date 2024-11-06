@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getBaseUrl } from "../../../utils/baseURL";
 
-const reviewApi = createApi({
+export const reviewApi = createApi({
   reducerPath: "reviewApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${getBaseUrl()}/api/reviews`,
@@ -14,30 +14,34 @@ const reviewApi = createApi({
       query: (reviewData) => ({
         url: "/post-review",
         method: "POST",
-        body: reviewData
-        }),
-      invalidatesTags: (result, error, {postId}) => [{type: "Reviews", id: postId}]
-    }),
-      
-      getReviewsCount: builder.query({
-          query: () => ({
-              url: "/total-reviews",
-          })
+        body: reviewData,
       }),
 
-      getReviewsByUserId: builder.query({
-          query: ({userId}) => ({
-              url: `/${userId}`,
-          }),
-          providesTags: (result) => result ? [{type: "Reviews", id: result[0]?.email}]: []
-      })
-  })
+      invalidatesTags: (result, error, { postId }) => [
+        { type: "Reviews", id: postId },
+      ],
+    }),
+
+    getReviewsCount: builder.query({
+      query: () => ({
+        url: "/total-reviews"
+      }),
+    }),
+
+    getReviewsByUserId: builder.query({
+      query: (userId) => ({
+        url: `/${userId}`
+      }),
+      providesTags: (result) =>
+        result ? [{ type: "Reviews", id: result[0]?.email }] : []
+    }),
+  }),
 });
 
 export const {
   usePostReviewMutation,
   useGetReviewsCountQuery,
-  useGetReviewsByUserIdQuery
+  useGetReviewsByUserIdQuery,
 } = reviewApi;
 
 export default reviewApi;

@@ -10,6 +10,7 @@ const ReviewsCard = ({ productReviews }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const reviews = productReviews || [];
+  // console.log(reviews);
 
   // HANDLE OPEN REVIEW MODAL
   const handleOpenReviewModal = () => {
@@ -49,15 +50,24 @@ const ReviewsCard = ({ productReviews }) => {
               ))}
             </div>
           </div>
-        ) : <p>No reviews yet</p>
-        }
+        ) : (
+          <p>No reviews yet</p>
+        )}
       </div>
       {/* Add Review Button */}
       <div>
-        <button onClick={handleOpenReviewModal} className="px-6 py-3 mt-3 bg-primary text-white rounded-md">Add Review</button>
+        <button
+          onClick={handleOpenReviewModal}
+          className="px-6 py-3 mt-3 bg-primary text-white rounded-md"
+        >
+          Add Review
+        </button>
       </div>
       {/* Review Modal */}
-      <PostReview isModalOpen={isModalOpen} handleClose={handleCloseReviewModal} />
+      <PostReview
+        isModalOpen={isModalOpen}
+        handleClose={handleCloseReviewModal}
+      />
     </div>
   );
 };

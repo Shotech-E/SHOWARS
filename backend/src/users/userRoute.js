@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
       return res.status(404).send({ message: "Invalid credentials" });
     }
 
-      const token = await generateAuthToken(user.id);
+      const token = await generateAuthToken(user._id);
     //   console.log("token:", token);
       res.cookie("token", token, {
         httpOnly: true,
@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
       
     res.status(200).send({
         message: "Logged in successful", token, user: {
-        id: user.id,
+        _id: user._id,
         email: user.email,
         username: user.username,
         role: user.role,
@@ -115,7 +115,7 @@ router.patch("/edit-profile", async (req, res) => {
     await user.save();
       res.status(200).send({ message: "User updated successfully",
         user: {
-          id: user.id,
+          _id: user._id,
           username: user.username,
           email: user.email,
           role: user.role,

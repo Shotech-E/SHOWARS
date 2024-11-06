@@ -32,7 +32,7 @@ const cartSlice = createSlice({
 
     updateQuantity: (state, action) => {
       const products = state.products.map((product) => {
-        if (product._id === action.payload._id) {
+        if (product._id === action.payload.id) {
           if (action.payload.type === "inc") {
             product.quantity += 1;
           } else if (action.payload.type === "dec") {
@@ -52,7 +52,7 @@ const cartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       state.products = state.products.filter(
-        (product) => product._id !== action.payload._id
+        (product) => product._id !== action.payload.id
       );
       state.selectedItems = setSelectedItems(state);
       state.totalPrice = setTotalPrice(state);

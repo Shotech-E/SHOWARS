@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -34,7 +35,7 @@ const PostReview = ({ isModalOpen, handleClose }) => {
       refetch();
       handleClose();
     } catch (error) {
-      alert(error.message);
+      alert(error?.data?.message || "All fields are required");
     }
     handleClose();
   };
