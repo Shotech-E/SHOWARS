@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEditProfileMutation } from "../../../redux/features/auth/authApi";
 import { useEffect, useState } from "react";
 import avatarImg from "../../../assets/avatar.png";
-import { setUser } from "../../../redux/features/auth/authSlice"; // Ensure you import setUser
+import { setUser } from "../../../redux/features/auth/authSlice";
 
 const UserProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
