@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  useFetchProductByIdQuery,
+  useUpdateProductMutation,
+} from "../../../../redux/features/products/productsApi";
 import { useSelector } from "react-redux";
-
-import { useAddProductMutation } from "../../../../redux/features/products/productsApi";
+import { useState, useEffect } from "react";
 import TextInput from "./TextInput";
 import SelectInput from "./SelectInput";
 import UploadImage from "./UploadImage";
@@ -27,19 +28,44 @@ const colours = [
   { label: "Green", value: "green" },
 ];
 
-export default function AddProduct() {
-  const [image, setImage] = useState("");
+const UpdateProduct = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+
   const [product, setProduct] = useState({
     name: "",
     category: "",
-    colour: "",
-    price: "",
     description: "",
+    price: "",
+    image: "",
+    colour: "",
   });
 
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
-  const [AddProduct, { isLoading, error }] = useAddProductMutation();
+  const {
+    data: productData,
+    isLoading: isProductLoading,
+    error: fetchError,
+    refetch,
+  } = useFetchProductByIdQuery(id);
+
+  const [newImage, setNewImage] = useState(null);
+
+  const [updateProduct, { isLoading: isUpdating, error: updateError }] =
+    useUpdateProductMutation();
+
+  useEffect(() => {
+    if (productData) {
+      setProduct({
+        name: productData.product.name || "",
+        category: productData.product.category || "",
+        description: productData.product.description || "",
+        price: productData.product.price || "",
+        image: productData.product.image || "",
+        colour: productData.product.colour || "",
+      });
+    }
+  }, [productData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,44 +75,49 @@ export default function AddProduct() {
     });
   };
 
+  const handleImageChange = (image) => {
+    setNewImage(image);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !product.name ||
-      !product.category ||
-      !product.price ||
-      !product.description ||
-      !product.colour
-    ) {
-      alert("Please fill all the required fields");
-      return;
-    }
+
+    const updatedProduct = {
+      ...product,
+      image: newImage ? newImage : product.image,
+      author: user?._id,
+    };
 
     try {
-      await AddProduct({ ...product, image, author: user?._id }).unwrap();
-      alert("Product added successfully");
-      setProduct({
-        name: "",
-        category: "",
-        colour: "",
-        price: "",
-        description: "",
-      });
-      setImage("");
-      navigate("/shop");
+      await updateProduct({ id, ...updatedProduct }).unwrap();
+      alert("Product updated successfully");
+      await refetch();
+      navigate("/dashboard/manage-products");
     } catch (error) {
-      console.error("Failed to submit product", error);
+      console.error("Failed to update product", error);
     }
   };
 
+  if (isProductLoading) {
+    return <div className="text-center">Loading product information...</div>;
+  }
+
+  if (fetchError) {
+    return <div className="text-center text-red-500">Error fetching product data: {fetchError.message}</div>;
+  }
+
+  if (updateError) {
+    return <div className="text-center text-red-500">Error updating product: {updateError.message}</div>;
+  }
+
   return (
     <div className="container mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-6">Add New Product</h2>
+      <h2 className="text-2xl font-semibold mb-4">Update Product</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextInput
           label="Product Name"
           name="name"
-          placeholder="Ex: Diamond Earings"
+          placeholder="Product Name"
           value={product.name}
           onChange={handleChange}
         />
@@ -97,7 +128,6 @@ export default function AddProduct() {
           onChange={handleChange}
           options={categories}
         />
-
         <SelectInput
           label="Colour"
           name="colour"
@@ -117,9 +147,9 @@ export default function AddProduct() {
         <UploadImage
           name="image"
           id="image"
-          value={(e) => setImage(e.target.value)}
+          value={newImage || product.image}
           placeholder="Image"
-          setImage={setImage}
+          setImage={handleImageChange}
         />
         <div>
           <label
@@ -140,10 +170,12 @@ export default function AddProduct() {
 
         <div>
           <button type="submit" className="add-product-btn">
-            Add Product
+            {isUpdating ? "Updating..." : "Update Product"}
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
+
+export default UpdateProduct;

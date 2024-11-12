@@ -31,7 +31,6 @@ export default function UploadImage({ name, setImage }) {
       .then((res) => {
         const imageUrl = res.data;
         setUrl(imageUrl);
-        // console.log(imageUrl);
         alert("Image uploaded successfully");
         setImage(imageUrl);
       })

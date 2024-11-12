@@ -7,7 +7,7 @@ const navItems = [
   { path: "/dashboard/admin", label: "Dashboard" },
   { path: "/dashboard/add-new-product", label: "Add New Product" },
   { path: "/dashboard/manage-products", label: "Manage Products" },
-  { path: "/dashboard/update-product/:id", label: "Update Product" },
+  // { path: "/dashboard/update-product/:id", label: "Update Product" },
   { path: "/dashboard/users", label: "All Users" },
   { path: "/dashboard/manage-orders", label: "Manage Orders" },
 ];

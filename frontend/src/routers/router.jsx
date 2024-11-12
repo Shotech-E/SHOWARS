@@ -19,8 +19,10 @@ import UserReviews from "../pages/dashboard/user/UserReviews";
 import UserProfile from "../pages/dashboard/user/UserProfile";
 import AdminMainDashboard from "../pages/dashboard/admin/dashboard/AdminMainDashboard";
 import AddProduct from "../pages/dashboard/admin/product/AddProduct";
-
-
+import ManageProduct from "../pages/dashboard/admin/product/ManageProduct";
+import ManageOrder from "../pages/dashboard/admin/product/ManageOrder";
+import AllUsers from "../pages/dashboard/admin/product/AllUsers";
+import UpdateProduct from "../pages/dashboard/admin/product/UpdateProduct";
 
 const Router = createBrowserRouter([
   {
@@ -123,7 +125,7 @@ const Router = createBrowserRouter([
         path: "manage-products",
         element: (
           <PrivateRoute role="admin">
-            <div>Manage Products</div>
+            <ManageProduct/>
           </PrivateRoute>
         ),
       },
@@ -131,7 +133,7 @@ const Router = createBrowserRouter([
         path: "update-product/:id",
         element: (
           <PrivateRoute role="admin">
-            <div>Update Product</div>
+            <UpdateProduct/>
           </PrivateRoute>
         ),
       },
@@ -139,7 +141,7 @@ const Router = createBrowserRouter([
         path: "users",
         element: (
           <PrivateRoute role="admin">
-            <div>Manage All User</div>
+            <AllUsers />
           </PrivateRoute>
         ),
       },
@@ -147,7 +149,7 @@ const Router = createBrowserRouter([
         path: "manage-orders",
         element: (
           <PrivateRoute role="admin">
-            <div>Manage Orders</div>
+            <ManageOrder/>
           </PrivateRoute>
         ),
       },
