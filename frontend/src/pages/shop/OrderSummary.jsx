@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from '../../redux/features/cart/cartSlice';
-// import { getBaseUrl } from "../../utils/baseURL";
+import { getBaseUrl } from "../../utils/baseURL";
 import { loadStripe } from "@stripe/stripe-js";
-// import { Elements } from "@stripe/react-stripe-js";
+
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
@@ -20,11 +21,11 @@ const OrderSummary = () => {
 
   // payment integration
   const makePayment = async (e) => {
-    const stripe = await loadStripe(
-      "pk_test_51QE7lZLe2VbPgG0NZaZq2psyWzjs53X2DvSib6oPaAt7HmbJ0Oz5dBr171qLggl9zgG9l9v6ZLPETwxMvzk3PVc300CGtZH8Cp"
-    );
-    // const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
-    // console.log(stripe);
+    // const stripe = await loadStripe(
+    //   "pk_test_51QE7lZLe2VbPgG0NZaZq2psyWzjs53X2DvSib6oPaAt7HmbJ0Oz5dBr171qLggl9zgG9l9v6ZLPETwxMvzk3PVc300CGtZH8Cp"
+    // );
+    const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
+    console.log(stripe);
     const body = {
       products: products,
       userId: user?._id,

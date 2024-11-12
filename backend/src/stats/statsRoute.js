@@ -50,19 +50,22 @@ router.get("/admin-stats", async (req, res) => {
 
         // Calculate total earning
         const totalEarningsResult = await Order.aggregate([
-            { $group: { _id: null, totalEarnings: { $sum: "$amount" } } },
+            { $group: { _id: null, totalEarnings: { $sum: "$amount" } }, },
         ]);
-        const totalEarnings = totalEarningsResult.length > 0 ? totalEarningsResult[0].totalEarnings : 0;
+        const totalEarnings = totalEarningsResult.length > 0 ? totalEarningsResult[0].totalEarnings.toFixed(2) : 0;
 
         const monthlyEarningsResult = await Order.aggregate([
             {
                 $group: {
-                    _id: { month: { month: "$createdAt" }, year: { year: "$createdAt" } },
+                    _id: {
+                        month: { $month: "$createdAt" },
+                        year: { $year: "$createdAt" }
+                    },
                     monthlyEarnings: { $sum: "$amount" },
                 },
             },
             {
-                $sort: { "_id.year": 1, "_id.month": -1 },
+                $sort: { "_id.year": 1, "_id.month": 1 },
             }
         ]);
 
@@ -70,7 +73,7 @@ router.get("/admin-stats", async (req, res) => {
         const monthlyEarnings = monthlyEarningsResult.map((entry) => ({
             month: entry._id.month,
             year: entry._id.year,
-            earnings: entry.monthlyEarnings.toFixed(2),
+            earnings: entry.monthlyEarnings,
         }))
 
         res.status(200).send({ totalUsers, totalProducts, totalOrders, totalReviews, totalEarnings, monthlyEarnings });

@@ -20,6 +20,9 @@ app.use(cors({
     credentials: true
 }));
 
+// Image route
+const uploadImage = require('./src/utils/uploadImage');
+
 // All Routes
 const authRoutes = require('./src/users/userRoute');
 const productRoutes = require('./src/products/productsRoute');
@@ -42,6 +45,12 @@ app.get("/", (req, res) => {
   res.send("Welcome to Showars Shopping Mall!");
 });
 }
+
+app.post("/uploadImage", (req, res) => {
+  uploadImage(req.body.image).then((url) => res.send(url)).catch((err) => res.status(500).send(err));  
+});
+
+// Start the server
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Server started on port ${port}`)
 })

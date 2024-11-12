@@ -8,7 +8,7 @@ const AdminStats = ({ stats }) => {
         <div className="bg-white shadow-md rounded-lg p-6 border border-blue-800 hover:scale-105 transition-all duration-200 cursor-pointer">
           <h2 className="text-2xl font-semibold mb-2">Total Earnings</h2>
           <p className="text-2xl text-blue-700 font-semibold">
-            ${stats?.totalEarnings.toFixed(2)}
+            ${stats?.totalEarnings}
           </p>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6 border border-blue-800 hover:scale-105 transition-all duration-200 cursor-pointer">

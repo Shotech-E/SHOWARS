@@ -31,9 +31,9 @@ const Navbar = () => {
   // ADMIN DROPDOWN MENU
   const showAdminDropdown = [
     { label: "Dashboard", path: "/dashboard/admin" },
-    { label: "Manage Items", path: "/dashboard/manage-products" },
+    { label: "Manage Products", path: "/dashboard/manage-products" },
     { label: "All Order", path: "/dashboard/manage-orders" },
-    { label: "Add Item", path: "/dashboard/add-new-item" },
+    { label: "Add Product", path: "/dashboard/add-new-product" },
   ];
 
   // USER DROPDOWN MENU

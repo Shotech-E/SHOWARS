@@ -3,16 +3,19 @@ import { Pie, Line } from "react-chartjs-2";
 import "chart.js/auto";
 
 const AdminStatsChart = ({ stats }) => {
+  console.log(stats);
   const pieData = {
-    labels: ["Total Earnings", "Total Orders", "Total Users", "Total Products"],
+    labels: ["Total Orders", "Total Products", "Total Reviews", "Total Users"],
     datasets: [
       {
         label: "Admin Stats",
         data: [
-          stats.totalEarnings.toFixed(2),
-          stats.totalOrders * 10,
-          stats.totalUsers * 10,
-          stats.totalProducts * 10,
+          // stats.monthlyEarnings,
+          // stats.totalEarnings.toFixed(2),
+          stats?.totalOrders,
+          stats?.totalProducts,
+          stats?.totalReviews,
+          stats?.totalUsers,
         ],
         backgroundColor: [
           "rgb(54, 162, 235)",
@@ -32,12 +35,12 @@ const AdminStatsChart = ({ stats }) => {
     ],
   };
   const data = new Array(12).fill(0);
-  // map correct month
+  // map correct months
   stats?.monthlyEarnings.forEach((entry) => {
     data[entry.month - 1] = entry.earnings;
   });
 
-  const polarData = {
+  const lineData = {
     labels: [
       "Jan",
       "Feb",
@@ -56,11 +59,10 @@ const AdminStatsChart = ({ stats }) => {
       {
         label: "Monthly Earnings",
         data,
-        fill: false,
+        fill: true,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
-        tension: 0.1,
-        // borderWidth: 2,
+        tension: 1,
       },
     ],
   };
@@ -83,12 +85,12 @@ const AdminStatsChart = ({ stats }) => {
 
         {/* Line Chart */}
         <div className="max-h-96 md:h-96 w-full">
-          <Line data={polarData} options={options} />
+          <Line data={lineData} options={options} />
         </div>
-          </div>
-          <div>
-              <p className="text-center">Made by Shotech Enterprises</p>
-          </div>
+      </div>
+      <div>
+        <p className="text-center">Made by Shotech Enterprises</p>
+      </div>
     </div>
   );
 };
