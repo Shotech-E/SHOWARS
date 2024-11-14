@@ -149,18 +149,25 @@ router.patch("/update-order-status/:id", verifyToken, verifyAdmin, async (req, r
 });
 
 // DELETE ORDER
-router.delete("/:id", verifyToken, verifyAdmin, async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedOrder = await Order.findByIdAndDelete(id);
-    if (!deletedOrder) {
-      return res.status(404).send({ message: "Order not found" });
+router.delete(
+  "/delete-order/:id",
+  verifyToken,
+  verifyAdmin,
+  async (req, res) => {
+    const { id } = req.params;
+    try {
+      const deletedOrder = await Order.findByIdAndDelete(id);
+      if (!deletedOrder) {
+        return res.status(404).send({ message: "Order not found" });
+      }
+      res
+        .status(200)
+        .send({ message: "Order deleted successfully", order: deletedOrder });
+    } catch (error) {
+      console.error("Error deleting order", error);
+      res.status(500).send({ message: "Failed deleting order" });
     }
-    res.status(200).send({ message: "Order deleted successfully", order: deletedOrder });
-  } catch (error) {
-    console.error("Error deleting order", error);
-    res.status(500).send({ message: "Failed deleting order" });
   }
-});
+);
 
 module.exports = router;

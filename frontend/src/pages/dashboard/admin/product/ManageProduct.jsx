@@ -1,8 +1,10 @@
-import { useFetchAllProductsQuery } from "../../../../redux/features/products/productsApi";
+import {
+  useFetchAllProductsQuery,
+  useDeleteProductMutation,
+} from "../../../../redux/features/products/productsApi";
 import { useState } from "react";
 import { formatDate } from "../../../../utils/formateDate";
 import { Link } from "react-router-dom";
-import { useDeleteProductMutation } from "../../../../redux/features/products/productsApi";
 
 const ManageProduct = () => {
   const [currentPage, setCurrentPage] = useState(1);

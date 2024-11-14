@@ -20,8 +20,8 @@ import UserProfile from "../pages/dashboard/user/UserProfile";
 import AdminMainDashboard from "../pages/dashboard/admin/dashboard/AdminMainDashboard";
 import AddProduct from "../pages/dashboard/admin/product/AddProduct";
 import ManageProduct from "../pages/dashboard/admin/product/ManageProduct";
-import ManageOrder from "../pages/dashboard/admin/product/ManageOrder";
-import AllUsers from "../pages/dashboard/admin/product/AllUsers";
+import ManageOrders from "../pages/dashboard/admin/order/ManageOrders";
+import ManageUsers from "../pages/dashboard/admin/user/ManageUsers";
 import UpdateProduct from "../pages/dashboard/admin/product/UpdateProduct";
 
 const Router = createBrowserRouter([
@@ -141,7 +141,7 @@ const Router = createBrowserRouter([
         path: "users",
         element: (
           <PrivateRoute role="admin">
-            <AllUsers />
+            <ManageUsers />
           </PrivateRoute>
         ),
       },
@@ -149,7 +149,7 @@ const Router = createBrowserRouter([
         path: "manage-orders",
         element: (
           <PrivateRoute role="admin">
-            <ManageOrder/>
+            <ManageOrders/>
           </PrivateRoute>
         ),
       },
