@@ -7,6 +7,7 @@ import ShopPage from "../pages/shop/ShopPage";
 import SingleProduct from "../pages/shop/productDetails/SingleProduct";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import ForgottenPassword from "../password/ForgottenPassword";
 import PaymentSuccess from "../components/PaymentSuccess";
 import TimelineStep from "../components/TimelineStep";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
@@ -23,6 +24,7 @@ import ManageProduct from "../pages/dashboard/admin/product/ManageProduct";
 import ManageOrders from "../pages/dashboard/admin/order/ManageOrders";
 import ManageUsers from "../pages/dashboard/admin/user/ManageUsers";
 import UpdateProduct from "../pages/dashboard/admin/product/UpdateProduct";
+
 
 const Router = createBrowserRouter([
   {
@@ -71,6 +73,10 @@ const Router = createBrowserRouter([
   {
     path: "/signup",
     element: <Register />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgottenPassword />,
   },
 
   // Admin Stats Dashboard

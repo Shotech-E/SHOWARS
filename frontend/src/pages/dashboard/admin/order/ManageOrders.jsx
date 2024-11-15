@@ -107,13 +107,13 @@ const getStatusColor = (status) => {
 		case 'pending':
 			return 'bg-yellow-500'
 		case 'processing':
-			return 'bg-blue-500'
+			return 'bg-red-400'
 		case 'shipped':
 			return 'bg-green-300'
 		case 'completed':
-			return 'bg-green-800'
+			return 'bg-green-700'
 		default:
-			return 'bg-green-800'
+			return 'bg-green-700'
 	}
 }
 
