@@ -88,11 +88,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="py-2 px-4 lg:py-0">
-<<<<<<< HEAD
             <Link to="/shop" className="hover:text-primary">
-=======
-            <Link to="/shop/" className="hover:text-primary">
->>>>>>> 6d2d8804e7acc21abc1f518c16e33c4fd41769fc
               Shop
             </Link>
           </li>

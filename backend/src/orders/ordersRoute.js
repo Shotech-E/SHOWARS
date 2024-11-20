@@ -24,13 +24,10 @@ router.post("/create-checkout-session", async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-<<<<<<< HEAD
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `http://localhost:5173/cancel`,
-=======
-      success_url: `https://showars-frontend-ssyw.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `https://showars-frontend-ssyw.vercel.app/cancel`,
->>>>>>> 5acd5951456b5dd28c883b22abc0d03c3dd3035b
+      // success_url: `https://showars-frontend-ssyw.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
+      // cancel_url: `https://showars-frontend-ssyw.vercel.app/cancel`,
     });
     res.json({ id: session.id });
   } catch (error) {
