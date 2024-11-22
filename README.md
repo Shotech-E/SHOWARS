@@ -1,1 +1,1 @@
-Showars Ecommercce website - stripe payment
+Showars Ecommerce website - stripe payment

@@ -7,7 +7,8 @@ import ShopPage from "../pages/shop/ShopPage";
 import SingleProduct from "../pages/shop/productDetails/SingleProduct";
 import Login from "../components/Login";
 import Register from "../components/Register";
-import ForgottenPassword from "../password/ForgottenPassword";
+import ForgotPassword from "../components/ForgotPassword"; // Forgot Password Page
+import ResetPassword from "../components/ResetPassword"; // Reset Password Page
 import PaymentSuccess from "../components/PaymentSuccess";
 import TimelineStep from "../components/TimelineStep";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
@@ -76,7 +77,11 @@ const Router = createBrowserRouter([
   },
   {
     path: "/forgot-password",
-    element: <ForgottenPassword />,
+    element: <ForgotPassword />, // Forgot Password Route
+  },
+  {
+    path: "/reset-password/:token",
+    element: <ResetPassword />, // Reset Password Route
   },
 
   // Admin Stats Dashboard
@@ -131,7 +136,7 @@ const Router = createBrowserRouter([
         path: "manage-products",
         element: (
           <PrivateRoute role="admin">
-            <ManageProduct/>
+            <ManageProduct />
           </PrivateRoute>
         ),
       },
@@ -139,7 +144,7 @@ const Router = createBrowserRouter([
         path: "update-product/:id",
         element: (
           <PrivateRoute role="admin">
-            <UpdateProduct/>
+            <UpdateProduct />
           </PrivateRoute>
         ),
       },
@@ -155,7 +160,7 @@ const Router = createBrowserRouter([
         path: "manage-orders",
         element: (
           <PrivateRoute role="admin">
-            <ManageOrders/>
+            <ManageOrders />
           </PrivateRoute>
         ),
       },
