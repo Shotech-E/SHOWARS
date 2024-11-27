@@ -7,8 +7,6 @@ const router = express.Router();
 const generateAuthToken = require("../middleware/generateAuthToken");
 // const verifyToken = require("../middleware/verifyToken");
 
-// This is a utility function to send a SendPulse API request
-
 // Register Endpoint
 router.post("/signup", async (req, res) => {
   try {
@@ -27,16 +25,17 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.status(404).send({ message: "User not found" });
     }
+
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(404).send({ message: "Invalid credentials" });
+      return res.status(401).send({ message: "Invalid credentials" });
     }
 
     const token = await generateAuthToken(user._id);
-    //   console.log("token:", token);
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
@@ -44,7 +43,7 @@ router.post("/login", async (req, res) => {
     });
 
     res.status(200).send({
-      message: "Logged in successful",
+      message: "Logged in successfully", // Replace `message` with this
       token,
       user: {
         _id: user._id,
@@ -61,6 +60,7 @@ router.post("/login", async (req, res) => {
     res.status(500).send({ message: "Error in login" });
   }
 });
+
 
 // All Users Endpoint
 // router.get("/users", verifyToken, async (req, res) => {

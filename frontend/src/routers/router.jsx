@@ -7,6 +7,7 @@ import ShopPage from "../pages/shop/ShopPage";
 import SingleProduct from "../pages/shop/productDetails/SingleProduct";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import Contact from "../components/Contact";
 import ForgotPassword from "../components/ForgotPassword"; // Forgot Password Page
 import ResetPassword from "../components/ResetPassword"; // Reset Password Page
 import PaymentSuccess from "../components/PaymentSuccess";
@@ -74,6 +75,10 @@ const Router = createBrowserRouter([
   {
     path: "/signup",
     element: <Register />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
   },
   {
     path: "/forgot-password",
