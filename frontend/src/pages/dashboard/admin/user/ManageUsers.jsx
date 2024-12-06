@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatDate } from "../../../../utils/formateDate";
 import {
   useDeleteUserMutation,
   useGetUserQuery,
@@ -59,7 +60,7 @@ const ManageUser = () => {
             </div>
 
             <div className="block w-full overflow-x-auto">
-              <table className="items-center bg-transparent w-full border-collapse ">
+              <table className="items-center bg-transparent w-full border-collapse">
                 <thead>
                   <tr>
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -72,9 +73,9 @@ const ManageUser = () => {
                       User role
                     </th>
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      {" "}
-                      Actions{" "}
-                    </th>{" "}
+                      
+                      Actions
+                    </th>
                   </tr>
                 </thead>
 
@@ -86,7 +87,33 @@ const ManageUser = () => {
                           {index + 1}
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                          {user?.email || "N/A"}
+                          <div className="flex items-center">
+                            {/* 
+                            <div className="flex-shrink-0 w-10 h-10">
+                              
+                              <img
+                                className="w-full h-full rounded-full"
+                                src={user.image}
+                                alt=""
+                              />
+                            </div> */}
+                            <div className="ml-3">
+                              
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                
+                                {user.email}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                          <div className="flex items-center">
+                            <div className="ml-3">
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                {formatDate(user?.createdAt) || "NA"}
+                              </p>
+                            </div>
+                          </div>
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <span
@@ -96,12 +123,12 @@ const ManageUser = () => {
                                 : "bg-amber-300"
                             }`}
                           >
-                            {" "}
+                            
                             {user?.role}
                           </span>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          {" "}
+                          
                           <button
                             onClick={() => handleEdit(user)}
                             className="ml-2"
@@ -113,8 +140,8 @@ const ManageUser = () => {
                             className="ml-2"
                           >
                             <i className="ri-delete-bin-2-line text-red-500 hover:text-red-900"></i>
-                          </button>{" "}
-                        </td>{" "}
+                          </button>
+                        </td>
                       </tr>
                     ))}
                 </tbody>
@@ -127,21 +154,20 @@ const ManageUser = () => {
             <div className="flex flex-wrap items-center md:justify-between justify-center">
               <div className="w-full md:w-6/12 px-4 mx-auto text-center">
                 <div className="text-sm text-blueGray-500 font-semibold py-1">
-                  Made with{" "}
+                  Made with
                   <a
                     href="https://www.creative-tim.com/product/notus-js"
                     className="text-blueGray-500 hover:text-gray-800"
                     target="_blank"
                   >
                     Shotech Enterprises
-                  </a>{" "}
-                  by{" "}
+                  </a>
+                  by
                   <a
                     href="https://www.creative-tim.com"
                     className="text-blueGray-500 hover:text-blueGray-800"
                     target="_blank"
                   >
-                    {" "}
                     Shotech
                   </a>
                   .

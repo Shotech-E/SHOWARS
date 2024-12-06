@@ -57,45 +57,48 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    enum: ["admin", "user"],
-    default: "user",
-  },
-  profileImage: {
-    type: String,
-  },
-  bio: {
-    type: String,
-    maxlength: 200,
-  },
-  profession: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
+    },
+    profileImage: {
+      type: String,
+    },
+    bio: {
+      type: String,
+      maxlength: 200,
+    },
+    profession: {
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
 
-  // Reset password token and expiry fields
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-});
+    // Reset password token and expiry fields
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+  },
+  { timestamps: true }
+);
 
 // Hashing password
 userSchema.pre("save", async function (next) {
