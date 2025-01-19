@@ -15,7 +15,7 @@ const TrendingProducts = () => {
   if (error) return <h1 className="text-center">Error loading products</h1>;
 
   const loadMoreProducts = () => {
-    setVisibleProducts((prevCount) => prevCount + 4);
+    setVisibleProducts((prevCount) => prevCount + 10);
   };
 
   return (

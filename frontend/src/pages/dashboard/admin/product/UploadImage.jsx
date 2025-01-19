@@ -73,15 +73,7 @@ export default function UploadImage({ name, setImage }) {
       {url && (
         <div className="mt-2 text-sm text-green-600">
           <p>Image uploaded successfully!</p>
-<<<<<<< HEAD
-          <img
-            src={url}
-            alt="uploaded-image"
-            className="w-72 h-48"
-          />
-=======
-          <img src={url} alt="uploaded-image"  className="w-72 h-48" />
->>>>>>> 929bf0563c964053f1cd23e41e73b66b2f5d8028
+          <img src={url} alt="uploaded-image" />
         </div>
       )}
     </div>
