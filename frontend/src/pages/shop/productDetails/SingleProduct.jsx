@@ -59,7 +59,7 @@ const SingleProduct = () => {
               {singleProduct.name}
             </h3>
             <p className="text-xl text-primary mb-8">
-              <strong>Price:</strong> {singleProduct.price}{" "}
+              <strong>Price:</strong> &#8358;{singleProduct.price}{" "}
               <s>{singleProduct.oldPrice}</s>
             </p>
             <p>{singleProduct.description}</p>
@@ -78,7 +78,10 @@ const SingleProduct = () => {
                 <strong>Rating: </strong>
                 <RatingStars rating={"4.5"} />
               </div>
-              <button onClick={() => handleAddToCart(singleProduct)} className="mt-6 px-6 py-3 bg-primary text-white rounded-md">
+              <button
+                onClick={() => handleAddToCart(singleProduct)}
+                className="mt-6 px-6 py-3 bg-primary text-white rounded-md"
+              >
                 Add to Cart
               </button>
             </div>
@@ -88,7 +91,7 @@ const SingleProduct = () => {
 
       {/* Display Reviews */}
       <section className="section__container mt-8">
-        <ReviewsCard productReviews={productReviews}/>
+        <ReviewsCard productReviews={productReviews} />
       </section>
     </>
   );

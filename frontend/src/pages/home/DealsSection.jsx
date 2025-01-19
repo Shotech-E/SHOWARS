@@ -2,7 +2,11 @@ import CountdownTimer from "../../components/CountdownTimer";
 import dealsImg from '../../assets/deals.png'
 
 const DealsSection = () => {
+<<<<<<< HEAD
   const countdownEndDate = "2024-12-15T23:59:59"; // Replace with your target date/time
+=======
+ const countdownEndDate = "2024-12-31T23:59:59"; // Replace with your target date/time
+>>>>>>> 929bf0563c964053f1cd23e41e73b66b2f5d8028
   return (
     <section className="section__container deals__container">
       <div className="deals__image">

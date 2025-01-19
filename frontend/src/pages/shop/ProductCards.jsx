@@ -32,7 +32,14 @@ const ProductCards = ({ products }) => {
                   handleAddToCart(product);
                 }}
               >
+<<<<<<< HEAD
+                <i
+                  className="ri-add-box-line bg-primary p-1.5 text-white hover:bg-primary-dark hover:text-white"
+                  title="Add to cart"
+                ></i>
+=======
                 <i className="ri-add-box-line bg-primary p-1.5 text-white hover:bg-primary-dark hover:text-white" title='Add to cart'></i>
+>>>>>>> 929bf0563c964053f1cd23e41e73b66b2f5d8028
               </button>
             </div>
           </div>
@@ -41,8 +48,8 @@ const ProductCards = ({ products }) => {
           <div className="product__card__content">
             <h4>{product.name}</h4>
             <p>
-              ${product.price}{" "}
-              {product?.oldPrice ? <s>${product.oldPrice}</s> : null}
+              &#8358;{product.price}{" "}
+              {product?.oldPrice ? <s>&#8358;{product.oldPrice}</s> : null}
             </p>
             <RatingStars rating={product.rating} />
           </div>

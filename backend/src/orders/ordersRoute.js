@@ -1,40 +1,60 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
+require("dotenv").config();
 const Order = require("./ordersModel");
 const verifyToken = require("../middleware/verifyToken");
 const verifyAdmin = require("../middleware/verifyAdmin");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-// CREATE CHECKOUT SESSION
 router.post("/create-checkout-session", async (req, res) => {
   const { products } = req.body;
+
   try {
+    // Calculate the total amount in NGN
     const lineItems = products.map((product) => ({
       price_data: {
-        currency: "usd",
+        currency: "ngn", // Use Naira for the currency
         product_data: {
           name: product.name,
           images: [product.image],
         },
-        unit_amount: Math.round(product.price * 100),
+        unit_amount: Math.round(product.price * 100), // Convert price to kobo
       },
       quantity: product.quantity,
     }));
+
+    // Calculate total session amount in NGN
+    const totalAmountNGN = products.reduce(
+      (sum, product) => sum + product.price * product.quantity,
+      0
+    );
+
+    // Check if total session amount meets minimum threshold
+    const totalAmountUSD = totalAmountNGN / 780; // Approximate exchange rate
+    if (totalAmountUSD < 0.5) {
+      throw new Error(
+        `The total amount must be at least ₦380 to meet the $0.50 minimum threshold.`
+      );
+    }
+
+    // Create the checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `http://localhost:5173/cancel`,
-      // success_url: `https://showars-frontend-ssyw.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
-      // cancel_url: `https://showars-frontend-ssyw.vercel.app/cancel`,
     });
+
     res.json({ id: session.id });
   } catch (error) {
-    console.error("Error creating checkout session", error);
-    res.status(500).json({ error: "Failed creating checkout session" });
+    console.error("Error creating checkout session", error.message);
+    res.status(400).json({ error: error.message });
   }
 });
+
+
 
 // CONFIRM PAYMENT
 router.post("/confirm-payment", async (req, res) => {
@@ -74,6 +94,189 @@ router.post("/confirm-payment", async (req, res) => {
   }
 });
 
+// // CREATE NAIRA PAYMENT SESSION
+// router.post("/create-naira-checkout-session", async (req, res) => {
+//   const { products, email } = req.body;
+
+//   if (!email) {
+//     return res.status(400).json({ error: "Email is required" });
+//   }
+
+//   try {
+//     // Your existing logic here
+//     const authResponse = await axios.post(
+//       `${process.env.MONNIFY_BASE_URL}/api/v1/auth/login`,
+//       {},
+//       {
+//         auth: {
+//           username: process.env.MONNIFY_API_KEY,
+//           password: process.env.MONNIFY_SECRET_KEY,
+//         },
+//       }
+//     );
+
+//     const accessToken = authResponse.data.responseBody.accessToken;
+
+//     const totalAmount = products.reduce(
+//       (sum, product) => sum + product.price * product.quantity,
+//       0
+//     );
+
+//     const paymentResponse = await axios.post(
+//       `${process.env.MONNIFY_BASE_URL}/api/v1/merchant/transactions/init-transaction`,
+//       {
+//         amount: totalAmount,
+//         customerName: "Customer Name",
+//         customerEmail: email,
+//         paymentReference: `ORDER-${Date.now()}`,
+//         paymentDescription: "Purchase of items",
+//         currencyCode: "NGN",
+//         contractCode: process.env.MONNIFY_CONTRACT_CODE,
+//         redirectUrl: "http://localhost:5173/success",
+//         paymentMethods: ["CARD", "ACCOUNT_TRANSFER"],
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+
+//     const checkoutUrl = paymentResponse.data.responseBody.checkoutUrl;
+
+//     res.json({ checkoutUrl });
+//   } catch (error) {
+//     console.error(
+//       "Error creating payment session:",
+//       error.response?.data || error.message
+//     );
+//     res.status(500).json({ error: "Failed creating payment session" });
+//   }
+// });
+
+
+// CONFIRM NAIRA PAYMENT
+// router.post("/confirm-naira payment", async (req, res) => {
+//   const { paymentReference } = req.body;
+
+//   try {
+//     // Authenticate with Monnify API
+//     const authResponse = await axios.post(
+//       `${process.env.MONNIFY_BASE_URL}/api/v1/auth/login`,
+//       {},
+//       {
+//         auth: {
+//           username: process.env.MONNIFY_API_KEY,
+//           password: process.env.MONNIFY_SECRET_KEY,
+//         },
+//       }
+//     );
+
+//     const accessToken = authResponse.data.responseBody.accessToken;
+
+//     // Verify the transaction
+//     const verificationResponse = await axios.get(
+//       `${process.env.MONNIFY_BASE_URL}/api/v2/transactions/${paymentReference}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+
+//     const transactionStatus =
+//       verificationResponse.data.responseBody.paymentStatus;
+
+//     if (transactionStatus === "PAID") {
+//       // Update order status to "paid"
+//       res.json({ status: "success", message: "Payment confirmed." });
+//     } else {
+//       res
+//         .status(400)
+//         .json({ status: "failed", message: "Payment not completed." });
+//     }
+//   } catch (error) {
+//     console.error(
+//       "Error confirming payment:",
+//       error.response?.data || error.message
+//     );
+//     res.status(500).json({ error: "Failed confirming payment" });
+//   }
+// });
+
+// router.post("/confirm-Naira-payment", async (req, res) => {
+//   const { paymentReference } = req.body;
+
+//   if (!paymentReference) {
+//     return res.status(400).json({ error: "Payment reference is required" });
+//   }
+
+//   try {
+//     // Authenticate with Monnify API to get access token
+//     const authResponse = await axios.post(
+//       `${process.env.MONNIFY_BASE_URL}/api/v1/auth/login`,
+//       {},
+//       {
+//         auth: {
+//           username: process.env.MONNIFY_API_KEY,
+//           password: process.env.MONNIFY_SECRET_KEY,
+//         },
+//       }
+//     );
+
+//     const accessToken = authResponse.data.responseBody.accessToken;
+
+//     // Verify the payment using Monnify API
+//     const paymentVerificationResponse = await axios.get(
+//       `${process.env.MONNIFY_BASE_URL}/api/v1/merchant/transactions/query?paymentReference=${paymentReference}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+
+//     const paymentDetails = paymentVerificationResponse.data.responseBody;
+
+//     // Check the payment status
+//     if (paymentDetails.paymentStatus !== "PAID") {
+//       return res.status(400).json({ error: "Payment not successful" });
+//     }
+
+//     // Extract necessary details
+//     const { totalAmountPaid, customerEmail, paymentMethod, items } =
+//       paymentDetails;
+
+//     // Check if the order already exists
+//     let order = await Order.findOne({ orderId: paymentReference });
+
+//     if (!order) {
+//       // Save the order to the database
+//       order = new Order({
+//         orderId: paymentReference,
+//         amount: totalAmountPaid,
+//         email: customerEmail,
+//         paymentMethod,
+//         products: items.map((item) => ({
+//           productId: item.productCode, // Ensure your Monnify setup passes product codes
+//           quantity: item.quantity,
+//         })),
+//         status: "completed", // Update the status based on Monnify's response
+//       });
+
+//       await order.save();
+//     }
+
+//     res.json({ order });
+//   } catch (error) {
+//     console.error(
+//       "Error confirming Naira payment:",
+//       error.response?.data || error.message
+//     );
+//     res.status(500).json({ error: "Failed to confirm payment" });
+//   }
+// });
+
 // GET ORDER BY email address
 router.get("/:email", async (req, res) => {
   const email = req.params.email;
@@ -95,7 +298,6 @@ router.get("/:email", async (req, res) => {
 });
 
 // get order by Id
-
 router.get("/order/:id", async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);

@@ -7,10 +7,28 @@ const filters = {
   categories: ["all", "accessories", "dress", "jewelry", "cosmetics"],
   colours: ["all", "black", "red", "gold", "blue", "green", "beige", "silver"],
   priceRanges: [
-    { label: "Under $50", min: 0, max: 50 },
-    { label: " $50 - $100", min: 50, max: 100 },
-    { label: " $100 - $200", min: 100, max: 200 },
-    { label: "$200 and above", min: 200, max: Infinity },
+    { label: `Under ${String.fromCharCode(8358)}50`, min: 0, max: 50 },
+    {
+      label: `${String.fromCharCode(8358)}50 - ${String.fromCharCode(
+        8358
+      )}100`,
+      min: 50,
+      max: 100,
+    },
+    {
+      label: `${String.fromCharCode(8358)}100 - ${String.fromCharCode(
+        8358
+      )}200`,
+      min: 100,
+      max: 200,
+    },
+    {
+      label: `${String.fromCharCode(8358)}200 - ${String.fromCharCode(
+        8358
+      )}Above`,
+      min: 200,
+      max: Infinity,
+    },
   ],
 };
 
@@ -100,17 +118,22 @@ const ShopPage = () => {
               >
                 Prev
               </button>
-              {[...Array(totalPages)].map((_, index) => (
-                <button
-                  className={`btn btn-secondary px-4 py-2 mr-2 rounded-md ${
-                    currentPage === index + 1 ? "bg-primary text-white" : ""
-                  }`}
-                  key={index}
-                  onClick={() => handlePageChange(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              ))}
+              {[...Array(totalPages)].map((_, index) => {
+                const pageNumber = index + 1; // Calculate the page number
+                return (
+                  <button
+                    key={index}
+                    className={`btn-secondary px-4 py-2 mr-2 rounded-md ${
+                      currentPage === pageNumber
+                        ? "bg-gray-500 text-white"
+                        : "bg-red-500"
+                    }`}
+                    onClick={() => handlePageChange(pageNumber)}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              })}
               <button
                 className="btn btn-secondary px-4 py-2 rounded-md ml-2"
                 onClick={() => handlePageChange(currentPage + 1)}

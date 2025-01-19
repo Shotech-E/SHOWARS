@@ -50,14 +50,22 @@ const ManageOrders = () => {
                     Manage Orders
                   </h3>
                 </div>
+<<<<<<< HEAD
                 <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+=======
+{/*                 <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+>>>>>>> 929bf0563c964053f1cd23e41e73b66b2f5d8028
                   <button
                     className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                   >
                     See all
                   </button>
+<<<<<<< HEAD
                 </div>
+=======
+                </div> */}
+>>>>>>> 929bf0563c964053f1cd23e41e73b66b2f5d8028
               </div>
             </div>
 
